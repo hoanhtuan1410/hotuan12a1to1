@@ -1,0 +1,1738 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Vật Lý 12 - Sách Cánh Diều</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --light: #f9f9f9;
+            --dark: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 10px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 2rem auto;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .main-content {
+            flex: 3;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            min-height: 600px;
+            position: relative;
+        }
+        
+        .chapters {
+            list-style: none;
+        }
+        
+        .chapter {
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .chapter-title {
+            background-color: var(--light);
+            padding: 0.8rem 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .chapter-title:hover {
+            background-color: #e8f4fc;
+            transform: translateX(5px);
+        }
+        
+        .lessons {
+            list-style: none;
+            padding-left: 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .lesson {
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: all 0.2s ease;
+            border-radius: 5px;
+            margin: 0.2rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lesson:hover {
+            background-color: #f0f7ff;
+            color: var(--primary);
+        }
+        
+        .lesson.active {
+            background-color: #e1f0ff;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .lesson-icon {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+        
+        .subsection {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            background-color: #f8fafc;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .subsection h3 {
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .subsection h3 i {
+            margin-right: 0.5rem;
+        }
+        
+        .formula-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .example-box, .exercise-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #f39c12;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .exercise-box {
+            background-color: #e8f8f5;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .video-card, .doc-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .video-card:hover, .doc-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-icon, .doc-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .search-container {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        .progress-container {
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: var(--radius);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .nav-button {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .nav-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .nav-button i {
+            margin-right: 0.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .floating-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-button:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Styles mới cho video và tài liệu */
+        .video-player {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+        
+        .doc-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .answer-box {
+            background-color: #e8f8f5;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            display: none;
+        }
+        
+        .show-answer {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                max-height: none;
+                position: static;
+            }
+            
+            .media-container {
+                flex-direction: column;
+            }
+            
+            .video-card, .doc-card {
+                min-width: 100%;
+            }
+            
+            .floating-buttons {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .video-player {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">⚛️</div>
+            <div>
+                <h1>Phần Mềm Vật Lý 12</h1>
+                <div class="subtitle">Sách Cánh Diều - Học tập hiệu quả, nắm vững kiến thức</div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-box" placeholder="Tìm kiếm bài học...">
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Tiến độ học tập</span>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <h2><i class="fas fa-book-open"></i> Nội dung học tập</h2>
+            <ul class="chapters" id="chapters-list">
+                <!-- Nội dung sẽ được thêm bằng JavaScript -->
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div id="welcome" class="content-section active">
+                <h2 class="section-title"><i class="fas fa-home"></i> Chào mừng đến với Phần Mềm Vật Lý 12</h2>
+                <p>Chọn một bài học từ danh sách bên trái để bắt đầu học tập.</p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <div style="font-size: 5rem; margin-bottom: 1rem;">📚</div>
+                    <h3>Khám phá thế giới Vật Lý</h3>
+                    <p>Phần mềm này cung cấp đầy đủ lý thuyết, công thức, ví dụ và bài tập cho chương trình Vật Lý lớp 12 theo sách Cánh Diều.</p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px; text-align: center; padding: 1rem; background: #f0f7ff; border-radius: 10px;">
+                            <i class="fas fa-book" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                            <h4>Lý thuyết chi tiết</h4>
+                            <p>Kiến thức được trình bày rõ ràng, dễ hiểu</p>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; text-align: center; padding: 1rem; background: #fff9e6; border-radius: 10px;">
+                            <i class="fas fa-calculator" style="font-size: 2rem; color: #f39c12; margin-bottom: 0.5rem;"></i>
+                            <h4>Công thức đầy đủ</h4>
+                            <p>Tổng hợp tất cả công thức cần nhớ</p>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; text-align: center; padding: 1rem; background: #e8f8f5; border-radius: 10px;">
+                            <i class="fas fa-tasks" style="font-size: 2rem; color: var(--secondary); margin-bottom: 0.5rem;"></i>
+                            <h4>Bài tập thực hành</h4>
+                            <p>Ví dụ minh họa và bài tập tự luyện</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Các phần nội dung bài học sẽ được thêm bằng JavaScript -->
+        </main>
+    </div>
+    
+    <div class="floating-buttons">
+        <button class="floating-button" id="scroll-top" title="Lên đầu trang">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="floating-button" id="theme-toggle" title="Đổi chủ đề">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+    
+    <footer>
+        <p>Phần Mềm Học Vật Lý 12 - Sách Cánh Diều &copy; 2023</p>
+    </footer>
+
+    <script>
+        // Dữ liệu bài học - ĐÃ SỬA CHỦ ĐỀ 4 THÀNH VẬT LÍ HẠT NHÂN
+        const curriculum = [
+            {
+                id: "topic1",
+                title: "Chủ đề 1: Vật lí nhiệt",
+                icon: "fas fa-thermometer-half",
+                lessons: [
+                    {
+                        id: "lesson1-1",
+                        title: "Bài 1: Sự chuyển thể của các chất",
+                        icon: "fas fa-water",
+                        content: {
+                            theory: [
+                                "Sự chuyển thể là quá trình chất chuyển từ trạng thái này sang trạng thái khác.",
+                                "Các dạng chuyển thể: nóng chảy, đông đặc, bay hơi, ngưng tụ, thăng hoa.",
+                                "Nhiệt độ chuyển thể phụ thuộc vào áp suất bên ngoài."
+                            ],
+                            formulas: [
+                                "Q = m.L (trong đó Q là nhiệt lượng, m là khối lượng, L là nhiệt chuyển thể riêng)",
+                                "Nhiệt nóng chảy: Q = m.λ",
+                                "Nhiệt hóa hơi: Q = m.L"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Tính nhiệt lượng cần thiết để làm nóng chảy 500g nước đá ở 0°C, biết nhiệt nóng chảy riêng của nước đá là 3,34.10^5 J/kg.",
+                                "Ví dụ 2: Một ấm đun nước chứa 1,5 lít nước ở 20°C. Tính nhiệt lượng cần thiết để đun sôi nước, biết nhiệt dung riêng của nước là 4180 J/kg.K."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Tính nhiệt lượng cần thiết để làm bay hơi hoàn toàn 200g nước ở 100°C, biết nhiệt hóa hơi riêng của nước là 2,26.10^6 J/kg.",
+                                    answer: "Đáp án: Q = m.L = 0,2 × 2,26.10^6 = 452.000 J"
+                                },
+                                {
+                                    question: "Bài 2: Một cục nước đá có khối lượng 100g ở -10°C được đun nóng đến khi hoàn toàn chuyển thành hơi nước ở 100°C. Tính tổng nhiệt lượng cần thiết.",
+                                    answer: "Đáp án: Q = Q1 + Q2 + Q3 + Q4 = m.c1.Δt1 + m.λ + m.c2.Δt2 + m.L = 0,1×2100×10 + 0,1×3,34.10^5 + 0,1×4180×100 + 0,1×2,26.10^6 = 301.800 J"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Sự chuyển thể của chất",
+                                    url: "https://www.youtube.com/embed/example1"
+                                },
+                                {
+                                    title: "Video 2: Thí nghiệm nóng chảy và đông đặc", 
+                                    url: "https://www.youtube.com/embed/example2"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Lý thuyết sự chuyển thể",
+                                    content: "SỰ CHUYỂN THỂ CỦA CÁC CHẤT\\n\\n1. Khái niệm: Sự chuyển thể là quá trình chất chuyển từ trạng thái này sang trạng thái khác.\\n\\n2. Các dạng chuyển thể:\\n   - Nóng chảy: Chuyển từ rắn sang lỏng\\n   - Đông đặc: Chuyển từ lỏng sang rắn\\n   - Bay hơi: Chuyển từ lỏng sang hơi\\n   - Ngưng tụ: Chuyển từ hơi sang lỏng\\n   - Thăng hoa: Chuyển từ rắn sang hơi\\n\\n3. Nhiệt độ chuyển thể phụ thuộc vào áp suất bên ngoài."
+                                },
+                                {
+                                    title: "Bài tập sự chuyển thể",
+                                    content: "BÀI TẬP SỰ CHUYỂN THỂ\\n\\nBài 1: Tính nhiệt lượng cần để làm nóng chảy 2kg nước đá ở 0°C.\\nBài 2: Một ấm nước chứa 1 lít nước ở 25°C. Tính nhiệt lượng cần để đun sôi."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson1-2",
+                        title: "Bài 2: Định luật 1 nhiệt động học",
+                        icon: "fas fa-fire",
+                        content: {
+                            theory: [
+                                "Định luật 1 nhiệt động học là nguyên lý bảo toàn năng lượng áp dụng cho các quá trình nhiệt.",
+                                "Công thức: ΔU = Q + A, trong đó ΔU là độ biến thiên nội năng, Q là nhiệt lượng hệ nhận được, A là công hệ thực hiện.",
+                                "Quy ước dấu: Q > 0 khi hệ nhận nhiệt, A > 0 khi hệ nhận công."
+                            ],
+                            formulas: [
+                                "ΔU = Q + A",
+                                "Đối với khí lý tưởng: ΔU = n.Cv.ΔT",
+                                "Công trong quá trình đẳng tích: A = 0",
+                                "Công trong quá trình đẳng áp: A = -p.ΔV"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Một khối khí nhận nhiệt lượng 200J và thực hiện công 150J. Tính độ biến thiên nội năng của khối khí.",
+                                "Ví dụ 2: Một xilanh chứa khí được nung nóng đẳng áp. Khí nhận nhiệt lượng 1000J và thực hiện công 400J. Tính độ biến thiên nội năng."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Một khối khí thực hiện công 250J và nội năng giảm 400J. Tính nhiệt lượng khí trao đổi với môi trường.",
+                                    answer: "Đáp án: ΔU = Q + A => -400 = Q + 250 => Q = -650J (khí tỏa nhiệt)"
+                                },
+                                {
+                                    question: "Bài 2: Trong một quá trình, nội năng của khí tăng 600J, đồng thời khí nhận nhiệt lượng 800J. Tính công khí thực hiện.",
+                                    answer: "Đáp án: ΔU = Q + A => 600 = 800 + A => A = -200J (khí nhận công)"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Định luật 1 nhiệt động học",
+                                    url: "https://www.youtube.com/embed/example3"
+                                },
+                                {
+                                    title: "Video 2: Ứng dụng định luật 1",
+                                    url: "https://www.youtube.com/embed/example4"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Định luật 1 nhiệt động học",
+                                    content: "ĐỊNH LUẬT 1 NHIỆT ĐỘNG HỌC\\n\\n1. Phát biểu: Độ biến thiên nội năng của hệ bằng tổng nhiệt lượng và công mà hệ nhận được.\\n\\n2. Biểu thức: ΔU = Q + A\\n\\n3. Quy ước dấu:\\n   - Q > 0: hệ nhận nhiệt\\n   - Q < 0: hệ tỏa nhiệt\\n   - A > 0: hệ nhận công\\n   - A < 0: hệ thực hiện công"
+                                },
+                                {
+                                    title: "Bài tập định luật 1",
+                                    content: "BÀI TẬP ĐỊNH LUẬT 1 NHIỆT ĐỘNG HỌC\\n\\nBài 1: Tính ΔU khi hệ nhận 500J nhiệt và thực hiện 200J công.\\nBài 2: Một khí nở ra thực hiện 300J công, nội năng tăng 150J. Tính Q."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson1-3",
+                        title: "Bài 3: Thang nhiệt độ",
+                        icon: "fas fa-temperature-high",
+                        content: {
+                            theory: [
+                                "Thang nhiệt độ là hệ thống đo lường nhiệt độ.",
+                                "Các thang nhiệt độ phổ biến: Celsius (°C), Fahrenheit (°F), Kelvin (K).",
+                                "Thang Kelvin là thang nhiệt độ tuyệt đối, 0K là độ không tuyệt đối."
+                            ],
+                            formulas: [
+                                "Chuyển đổi giữa Celsius và Kelvin: T(K) = t(°C) + 273.15",
+                                "Chuyển đổi giữa Celsius và Fahrenheit: t(°F) = t(°C)×1.8 + 32",
+                                "Chuyển đổi giữa Fahrenheit và Kelvin: T(K) = (t(°F) + 459.67)×5/9"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Nhiệt độ cơ thể người bình thường là 37°C. Hãy chuyển đổi sang thang Fahrenheit và Kelvin.",
+                                "Ví dụ 2: Nhiệt độ đông đặc của nước là 0°C, 32°F, 273K. Nhiệt độ sôi của nước là 100°C, 212°F, 373K."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Chuyển đổi 25°C sang Fahrenheit và Kelvin.",
+                                    answer: "Đáp án: 25°C = 25×1.8 + 32 = 77°F = 25 + 273.15 = 298.15K"
+                                },
+                                {
+                                    question: "Bài 2: Nhiệt độ không khí là 68°F. Hãy chuyển đổi sang Celsius và Kelvin.",
+                                    answer: "Đáp án: 68°F = (68 - 32)/1.8 = 20°C = 20 + 273.15 = 293.15K"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Các thang nhiệt độ",
+                                    url: "https://www.youtube.com/embed/example5"
+                                },
+                                {
+                                    title: "Video 2: So sánh các thang nhiệt độ",
+                                    url: "https://www.youtube.com/embed/example6"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Thang nhiệt độ",
+                                    content: "THANG NHIỆT ĐỘ\\n\\n1. Thang Celsius (°C):\\n   - 0°C: nước đông đặc\\n   - 100°C: nước sôi\\n\\n2. Thang Fahrenheit (°F):\\n   - 32°F: nước đông đặc\\n   - 212°F: nước sôi\\n\\n3. Thang Kelvin (K):\\n   - 0K: độ không tuyệt đối\\n   - 273.15K: nước đông đặc"
+                                },
+                                {
+                                    title: "Bài tập chuyển đổi nhiệt độ",
+                                    content: "BÀI TẬP CHUYỂN ĐỔI NHIỆT ĐỘ\\n\\nBài 1: Đổi 50°C sang °F và K\\nBài 2: Đổi 98.6°F sang °C và K"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson1-4",
+                        title: "Bài 4: Sự truyền nhiệt",
+                        icon: "fas fa-fire-alt",
+                        content: {
+                            theory: [
+                                "Sự truyền nhiệt là quá trình trao đổi năng lượng nhiệt giữa các vật có nhiệt độ khác nhau.",
+                                "Có 3 hình thức truyền nhiệt: dẫn nhiệt, đối lưu và bức xạ nhiệt.",
+                                "Nhiệt luôn truyền từ vật có nhiệt độ cao sang vật có nhiệt độ thấp."
+                            ],
+                            formulas: [
+                                "Dẫn nhiệt: Q = (λ.A.Δt.T)/d",
+                                "Định luật Stefan-Boltzmann: P = σ.ε.A.T⁴",
+                                "Nhiệt lượng trao đổi: Q = m.c.Δt"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Tính nhiệt lượng cần để đun sôi 2 lít nước từ 20°C, biết nhiệt dung riêng của nước là 4180 J/kg.K.",
+                                "Ví dụ 2: Một thanh đồng dài 2m, tiết diện 0.5cm², một đầu được nung nóng. Tính nhiệt lượng truyền qua thanh trong 1 phút."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Tính nhiệt lượng cần để nung nóng 500g nhôm từ 25°C lên 100°C, biết c nhôm = 880 J/kg.K.",
+                                    answer: "Đáp án: Q = m.c.Δt = 0.5 × 880 × 75 = 33.000 J"
+                                },
+                                {
+                                    question: "Bài 2: Một bình nước 2 lít ở 20°C được đun bằng bếp 1000W. Tính thời gian cần để đun sôi nước.",
+                                    answer: "Đáp án: Q = m.c.Δt = 2 × 4180 × 80 = 668.800 J; t = Q/P = 668.800/1000 = 668.8 giây ≈ 11 phút"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Các hình thức truyền nhiệt",
+                                    url: "https://www.youtube.com/embed/example7"
+                                },
+                                {
+                                    title: "Video 2: Ứng dụng truyền nhiệt",
+                                    url: "https://www.youtube.com/embed/example8"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Sự truyền nhiệt",
+                                    content: "SỰ TRUYỀN NHIỆT\\n\\n1. Dẫn nhiệt:\\n   - Truyền nhiệt qua vật chất\\n   - Không có sự chuyển động của vật chất\\n\\n2. Đối lưu:\\n   - Truyền nhiệt bằng dòng chất lỏng/khí\\n   - Có sự chuyển động của vật chất\\n\\n3. Bức xạ nhiệt:\\n   - Truyền nhiệt bằng sóng điện từ\\n   - Không cần môi trường truyền"
+                                },
+                                {
+                                    title: "Bài tập truyền nhiệt",
+                                    content: "BÀI TẬP TRUYỀN NHIỆT\\n\\nBài 1: Tính nhiệt lượng truyền qua tường gạch dày 20cm trong 1 giờ.\\nBài 2: Tính công suất bức xạ của vật đen tuyệt đối ở 500K."
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: "topic2",
+                title: "Chủ đề 2: Khí lí tưởng",
+                icon: "fas fa-wind",
+                lessons: [
+                    {
+                        id: "lesson2-1",
+                        title: "Bài 1: Mô hình động học phân tử khí",
+                        icon: "fas fa-atom",
+                        content: {
+                            theory: [
+                                "Mô hình động học phân tử khí dựa trên giả thuyết: chất khí gồm các phân tử chuyển động hỗn loạn không ngừng.",
+                                "Các phân tử khí được coi là những chất điểm có khối lượng, chuyển động theo các quỹ đạo thẳng giữa các va chạm.",
+                                "Va chạm giữa các phân tử và với thành bình là va chạm đàn hồi."
+                            ],
+                            formulas: [
+                                "Áp suất khí: p = (1/3)ρ.v² (với ρ là mật độ khí, v là vận tốc căn quân phương)",
+                                "Vận tốc căn quân phương: v = √(3RT/M)",
+                                "Động năng trung bình của phân tử: Wđ = (3/2)kT"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Tính vận tốc căn quân phương của phân tử khí oxi ở 27°C, biết khối lượng mol của oxi là 32g/mol.",
+                                "Ví dụ 2: Tính động năng trung bình của phân tử khí nitơ ở nhiệt độ 300K."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Tính vận tốc căn quân phương của phân tử khí hydro ở 0°C, biết khối lượng mol của hydro là 2g/mol.",
+                                    answer: "Đáp án: v = √(3RT/M) = √(3×8.31×273/0.002) = 1840 m/s"
+                                },
+                                {
+                                    question: "Bài 2: Ở nhiệt độ nào thì vận tốc căn quân phương của phân tử khí oxi bằng vận tốc căn quân phương của phân tử khí nitơ ở 27°C?",
+                                    answer: "Đáp án: v_O2 = v_N2 => T_O2 = (M_N2/M_O2)×T_N2 = (28/32)×300 = 262.5K = -10.65°C"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Mô hình động học phân tử",
+                                    url: "https://www.youtube.com/embed/example9"
+                                },
+                                {
+                                    title: "Video 2: Thí nghiệm mô phỏng",
+                                    url: "https://www.youtube.com/embed/example10"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Mô hình động học",
+                                    content: "MÔ HÌNH ĐỘNG HỌC PHÂN TỬ KHÍ\\n\\n1. Các giả thuyết cơ bản:\\n   - Chất khí gồm các phân tử chuyển động hỗn loạn\\n   - Phân tử là chất điểm\\n   - Va chạm đàn hồi\\n   - Không tương tác khi không va chạm\\n\\n2. Ý nghĩa: Giải thích các tính chất của khí lý tưởng"
+                                },
+                                {
+                                    title: "Bài tập mô hình phân tử",
+                                    content: "BÀI TẬP MÔ HÌNH PHÂN TỬ\\n\\nBài 1: Tính vận tốc trung bình của phân tử khí ở 25°C.\\nBài 2: So sánh động năng phân tử các khí ở cùng nhiệt độ."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson2-2",
+                        title: "Bài 2: Phương trình trạng thái khí lí tưởng",
+                        icon: "fas fa-flask",
+                        content: {
+                            theory: [
+                                "Phương trình trạng thái khí lý tưởng mô tả mối quan hệ giữa áp suất, thể tích và nhiệt độ của một lượng khí xác định.",
+                                "Khí lý tưởng tuân theo phương trình: pV = nRT",
+                                "Trong đó: p là áp suất, V là thể tích, n là số mol, R là hằng số khí lý tưởng, T là nhiệt độ tuyệt đối."
+                            ],
+                            formulas: [
+                                "Phương trình trạng thái: pV = nRT",
+                                "Hằng số khí lý tưởng: R = 8,314 J/(mol.K)",
+                                "Dạng khác: pV = (m/M)RT (với m là khối lượng, M là khối lượng mol)"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Một bình kín chứa 0,5 mol khí ở áp suất 2 atm và nhiệt độ 27°C. Tính thể tích của bình.",
+                                "Ví dụ 2: Một bình có thể tích 10 lít chứa 0,2 mol khí ở nhiệt độ 27°C. Tính áp suất của khí trong bình."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Một bình kín có thể tích 5 lít chứa khí nitơ ở áp suất 2 atm và nhiệt độ 27°C. Tính số mol khí trong bình.",
+                                    answer: "Đáp án: n = pV/RT = (2×101325×0.005)/(8.314×300) = 0.406 mol"
+                                },
+                                {
+                                    question: "Bài 2: Một bình chứa 0,1 mol khí ở nhiệt độ 27°C và áp suất 1 atm. Nếu nhiệt độ tăng lên 127°C và thể tích giảm còn một nửa, tính áp suất mới của khí.",
+                                    answer: "Đáp án: p2 = (p1×V1×T2)/(V2×T1) = (1×V×400)/(0.5V×300) = 2.67 atm"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Phương trình trạng thái",
+                                    url: "https://www.youtube.com/embed/example11"
+                                },
+                                {
+                                    title: "Video 2: Ứng dụng phương trình trạng thái",
+                                    url: "https://www.youtube.com/embed/example12"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Phương trình trạng thái",
+                                    content: "PHƯƠNG TRÌNH TRẠNG THÁI KHÍ LÝ TƯỞNG\\n\\n1. Phương trình: pV = nRT\\n\\n2. Các đại lượng:\\n   - p: áp suất (Pa)\\n   - V: thể tích (m³)\\n   - n: số mol\\n   - R: hằng số khí = 8.314 J/(mol.K)\\n   - T: nhiệt độ Kelvin\\n\\n3. Ứng dụng: Tính các thông số trạng thái khí"
+                                },
+                                {
+                                    title: "Bài tập khí lý tưởng",
+                                    content: "BÀI TẬP KHÍ LÝ TƯỞNG\\n\\nBài 1: Tính thể tích 1 mol khí ở ĐKTC.\\nBài 2: Khí trong bình 2 lít ở 2 atm, 27°C. Tính số mol."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson2-3",
+                        title: "Bài 3: Các định luật khí",
+                        icon: "fas fa-chart-line",
+                        content: {
+                            theory: [
+                                "Các định luật khí mô tả mối quan hệ giữa áp suất, thể tích và nhiệt độ trong các điều kiện đặc biệt.",
+                                "Định luật Boyle: Ở nhiệt độ không đổi, áp suất và thể tích tỉ lệ nghịch.",
+                                "Định luật Charles: Ở áp suất không đổi, thể tích và nhiệt độ tỉ lệ thuận."
+                            ],
+                            formulas: [
+                                "Định luật Boyle: p₁V₁ = p₂V₂ (T = const)",
+                                "Định luật Charles: V₁/T₁ = V₂/T₂ (p = const)",
+                                "Định luật Gay-Lussac: p₁/T₁ = p₂/T₂ (V = const)"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Một khối khí có thể tích 2 lít ở áp suất 1 atm. Nếu thể tích giảm còn 1 lít ở cùng nhiệt độ, tính áp suất mới.",
+                                "Ví dụ 2: Khí trong bình có thể tích 3 lít ở 27°C. Tính thể tích khi nhiệt độ tăng lên 127°C (áp suất không đổi)."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Khí trong xi lanh có thể tích 500 cm³ ở áp suất 2 atm. Nếu nén đến thể tích 250 cm³ ở cùng nhiệt độ, tính áp suất mới.",
+                                    answer: "Đáp án: p2 = p1×V1/V2 = 2×500/250 = 4 atm"
+                                },
+                                {
+                                    question: "Bài 2: Bong bóng khí có thể tích 2 cm³ ở đáy hồ sâu 10m (p ≈ 2 atm). Tính thể tích khi nổi lên mặt nước (p = 1 atm), nhiệt độ không đổi.",
+                                    answer: "Đáp án: V2 = p1×V1/p2 = 2×2/1 = 4 cm³"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Các định luật khí",
+                                    url: "https://www.youtube.com/embed/example13"
+                                },
+                                {
+                                    title: "Video 2: Thí nghiệm minh họa",
+                                    url: "https://www.youtube.com/embed/example14"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Các định luật khí",
+                                    content: "CÁC ĐỊNH LUẬT KHÍ\\n\\n1. Định luật Boyle (1662):\\n   pV = const (T không đổi)\\n\\n2. Định luật Charles (1787):\\n   V/T = const (p không đổi)\\n\\n3. Định luật Gay-Lussac (1802):\\n   p/T = const (V không đổi)\\n\\n4. Định luật Avogadro (1811):\\n   V/n = const (p,T không đổi)"
+                                },
+                                {
+                                    title: "Bài tập định luật khí",
+                                    content: "BÀI TẬP ĐỊNH LUẬT KHÍ\\n\\nBài 1: Áp dụng định luật Boyle tính p khi V thay đổi.\\nBài 2: Áp dụng định luật Charles tính V khi T thay đổi."
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: "topic3",
+                title: "Chủ đề 3: Từ trường",
+                icon: "fas fa-magnet",
+                lessons: [
+                    {
+                        id: "lesson3-1",
+                        title: "Bài 1: Từ trường",
+                        icon: "fas fa-compass",
+                        content: {
+                            theory: [
+                                "Từ trường là môi trường vật chất đặc biệt tồn tại xung quanh nam châm và dòng điện.",
+                                "Từ trường được biểu diễn bằng các đường sức từ.",
+                                "Đặc điểm của đường sức từ: không cắt nhau, đi ra từ cực Bắc và đi vào cực Nam."
+                            ],
+                            formulas: [
+                                "Cảm ứng từ: B = F/(I.l.sinα)",
+                                "Lực từ tác dụng lên dòng điện: F = B.I.l.sinα",
+                                "Từ thông: Φ = B.S.cosθ"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Một dây dẫn thẳng dài 0,5m mang dòng điện 2A đặt trong từ trường đều có cảm ứng từ 0,1T. Tính lực từ tác dụng lên dây khi dây vuông góc với đường sức từ.",
+                                "Ví dụ 2: Một khung dây hình vuông cạnh 10cm đặt trong từ trường đều có cảm ứng từ 0,2T. Tính từ thông qua khung khi mặt phẳng khung vuông góc với đường sức từ."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Một dây dẫn thẳng dài 1m mang dòng điện 5A đặt trong từ trường đều có cảm ứng từ 0,2T. Tính lực từ tác dụng lên dây khi góc giữa dây và đường sức từ là 30°.",
+                                    answer: "Đáp án: F = B.I.l.sinα = 0.2×5×1×sin30° = 0.5 N"
+                                },
+                                {
+                                    question: "Bài 2: Một khung dây hình chữ nhật có kích thước 20cm x 30cm đặt trong từ trường đều có cảm ứng từ 0,5T. Tính từ thông qua khung khi mặt phẳng khung hợp với đường sức từ một góc 60°.",
+                                    answer: "Đáp án: Φ = B.S.cosθ = 0.5×(0.2×0.3)×cos60° = 0.015 Wb"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Khái niệm từ trường",
+                                    url: "https://www.youtube.com/embed/example15"
+                                },
+                                {
+                                    title: "Video 2: Đường sức từ",
+                                    url: "https://www.youtube.com/embed/example16"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Từ trường",
+                                    content: "TỪ TRƯỜNG\\n\\n1. Khái niệm: Từ trường là dạng vật chất tồn tại xung quanh nam châm và dòng điện.\\n\\n2. Đường sức từ:\\n   - Chiều: đi ra từ cực Bắc, đi vào cực Nam\\n   - Mật độ: tỉ lệ với độ mạnh từ trường\\n   - Không cắt nhau\\n\\n3. Cảm ứng từ B: đặc trưng cho độ mạnh từ trường"
+                                },
+                                {
+                                    title: "Bài tập từ trường",
+                                    content: "BÀI TẬP TỪ TRƯỜNG\\n\\nBài 1: Tính lực từ tác dụng lên dây dẫn.\\nBài 2: Tính từ thông qua khung dây."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson3-2",
+                        title: "Bài 2: Lực từ tác dụng lên dòng điện",
+                        icon: "fas fa-bolt",
+                        content: {
+                            theory: [
+                                "Lực từ tác dụng lên dòng điện được xác định bởi quy tắc bàn tay trái.",
+                                "Chiều của lực từ: ngón cái choãi ra 90° chỉ chiều lực từ khi các ngón tay chỉ chiều dòng điện và đường sức từ xuyên vào lòng bàn tay.",
+                                "Độ lớn lực từ phụ thuộc vào cảm ứng từ, cường độ dòng điện, chiều dài dây dẫn và góc giữa dây và từ trường."
+                            ],
+                            formulas: [
+                                "F = B.I.l.sinθ",
+                                "Quy tắc bàn tay trái xác định chiều lực từ",
+                                "Lực từ cực đại khi dây vuông góc với từ trường: F_max = B.I.l"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Dây dẫn dài 0.5m, dòng điện 3A, từ trường 0.4T vuông góc với dây. Tính lực từ.",
+                                "Ví dụ 2: Xác định chiều lực từ tác dụng lên dây dẫn thẳng đứng có dòng điện đi lên trong từ trường hướng sang phải."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Dây dẫn 1m, I = 2A, B = 0.3T, θ = 45°. Tính lực từ.",
+                                    answer: "Đáp án: F = B.I.l.sinθ = 0.3×2×1×sin45° = 0.424 N"
+                                },
+                                {
+                                    question: "Bài 2: Khung dây hình vuông cạnh 10cm, I = 5A, B = 0.2T vuông góc với mặt phẳng khung. Tính lực từ tác dụng lên mỗi cạnh.",
+                                    answer: "Đáp án: F = B.I.l = 0.2×5×0.1 = 0.1 N trên mỗi cạnh"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Lực từ tác dụng lên dòng điện",
+                                    url: "https://www.youtube.com/embed/example17"
+                                },
+                                {
+                                    title: "Video 2: Quy tắc bàn tay trái",
+                                    url: "https://www.youtube.com/embed/example18"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Lực từ",
+                                    content: "LỰC TỪ TÁC DỤNG LÊN DÒNG ĐIỆN\\n\\n1. Độ lớn: F = B.I.l.sinθ\\n\\n2. Chiều: xác định bằng quy tắc bàn tay trái\\n\\n3. Quy tắc bàn tay trái:\\n   - Ngón cái: chiều lực từ\\n   - Các ngón: chiều dòng điện\\n   - Lòng bàn tay: đường sức từ đi vào"
+                                },
+                                {
+                                    title: "Bài tập lực từ",
+                                    content: "BÀI TẬP LỰC TỪ\\n\\nBài 1: Tính lực từ với các thông số cho trước.\\nBài 2: Xác định chiều lực từ bằng quy tắc bàn tay trái."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson3-3",
+                        title: "Bài 3: Từ trường của dòng điện",
+                        icon: "fas fa-circle",
+                        content: {
+                            theory: [
+                                "Dòng điện sinh ra từ trường xung quanh nó.",
+                                "Từ trường của dòng điện thẳng: các đường sức từ là những đường tròn đồng tâm.",
+                                "Từ trường của ống dây: từ trường đều bên trong ống dây, các đường sức từ song song cách đều."
+                            ],
+                            formulas: [
+                                "Dòng điện thẳng: B = (μ₀.I)/(2π.r)",
+                                "Ống dây solenoid: B = μ₀.n.I",
+                                "Vòng dây tròn: B = (μ₀.I)/(2R) tại tâm"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Tính cảm ứng từ tại điểm cách dây dẫn thẳng dài vô hạn 5cm, dòng điện 10A.",
+                                "Ví dụ 2: Ống dây dài 50cm, 1000 vòng, dòng điện 2A. Tính cảm ứng từ trong lòng ống dây."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Dây thẳng dài vô hạn, I = 5A. Tính B tại điểm cách dây 10cm.",
+                                    answer: "Đáp án: B = μ₀I/(2πr) = (4π×10⁻⁷×5)/(2π×0.1) = 10⁻⁵ T"
+                                },
+                                {
+                                    question: "Bài 2: Ống dây 40cm, 800 vòng, I = 3A. Tính B trong lòng ống dây.",
+                                    answer: "Đáp án: n = N/L = 800/0.4 = 2000 vòng/m; B = μ₀nI = 4π×10⁻⁷×2000×3 = 7.54×10⁻³ T"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Từ trường dòng điện thẳng",
+                                    url: "https://www.youtube.com/embed/example19"
+                                },
+                                {
+                                    title: "Video 2: Từ trường ống dây",
+                                    url: "https://www.youtube.com/embed/example20"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Từ trường dòng điện",
+                                    content: "TỪ TRƯỜNG CỦA DÒNG ĐIỆN\\n\\n1. Dòng điện thẳng:\\n   - Đường sức: đường tròn đồng tâm\\n   - Chiều: quy tắc nắm tay phải\\n\\n2. Ống dây solenoid:\\n   - Từ trường đều bên trong\\n   - B = μ₀nI\\n\\n3. Vòng dây tròn:\\n   - B lớn nhất tại tâm\\n   - B = μ₀I/(2R)"
+                                },
+                                {
+                                    title: "Bài tập từ trường dòng điện",
+                                    content: "BÀI TẬP TỪ TRƯỜNG DÒNG ĐIỆN\\n\\nBài 1: Tính B của dây thẳng tại các khoảng cách.\\nBài 2: Tính B trong ống dây với số vòng và dòng điện cho trước."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson3-4",
+                        title: "Bài 4: Hiện tượng cảm ứng điện từ",
+                        icon: "fas fa-exchange-alt",
+                        content: {
+                            theory: [
+                                "Hiện tượng cảm ứng điện từ: khi từ thông qua mạch kín biến thiên thì trong mạch xuất hiện dòng điện cảm ứng.",
+                                "Dòng điện cảm ứng tồn tại trong khoảng thời gian từ thông biến thiên.",
+                                "Chiều dòng điện cảm ứng được xác định bằng định luật Lenz: dòng điện cảm ứng có chiều chống lại sự biến thiên từ thông."
+                            ],
+                            formulas: [
+                                "Suất điện động cảm ứng: ε = -dΦ/dt",
+                                "Định luật Faraday: |ε| = |dΦ/dt|",
+                                "Định luật Lenz: chiều dòng điện cảm ứng chống lại nguyên nhân sinh ra nó"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Từ thông qua khung dây biến thiên từ 0.02 Wb đến 0.08 Wb trong 0.1s. Tính suất điện động cảm ứng.",
+                                "Ví dụ 2: Nam châm dịch chuyển lại gần vòng dây kín. Xác định chiều dòng điện cảm ứng."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Từ thông qua khung 50 vòng giảm từ 0.1 Wb đến 0 trong 0.2s. Tính ε.",
+                                    answer: "Đáp án: ε = -N×ΔΦ/Δt = -50×(0-0.1)/0.2 = 25 V"
+                                },
+                                {
+                                    question: "Bài 2: Vòng dây trong từ trường đều B = 0.5T, diện tích 0.01m² quay từ vuông góc đến song song với từ trường trong 0.5s. Tính ε.",
+                                    answer: "Đáp án: ΔΦ = B×S×(cos90°-cos0°) = 0.5×0.01×(0-1) = -0.005 Wb; ε = -ΔΦ/Δt = 0.005/0.5 = 0.01 V"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Hiện tượng cảm ứng điện từ",
+                                    url: "https://www.youtube.com/embed/example21"
+                                },
+                                {
+                                    title: "Video 2: Định luật Lenz",
+                                    url: "https://www.youtube.com/embed/example22"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Cảm ứng điện từ",
+                                    content: "HIỆN TƯỢNG CẢM ỨNG ĐIỆN TỪ\\n\\n1. Định luật Faraday:\\n   - Khi từ thông biến thiên → xuất hiện dòng điện cảm ứng\\n   - |ε| = |dΦ/dt|\\n\\n2. Định luật Lenz:\\n   - Chiều dòng điện cảm ứng chống lại sự biến thiên từ thông\\n   - ε = -dΦ/dt\\n\\n3. Ứng dụng: máy phát điện, biến áp"
+                                },
+                                {
+                                    title: "Bài tập cảm ứng điện từ",
+                                    content: "BÀI TẬP CẢM ỨNG ĐIỆN TỪ\\n\\nBài 1: Tính suất điện động cảm ứng.\\nBài 2: Xác định chiều dòng điện cảm ứng."
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: "topic4",
+                title: "Chủ đề 4: Vật lí hạt nhân",  // ĐÃ SỬA THÀNH VẬT LÍ HẠT NHÂN
+                icon: "fas fa-atom",  // Icon phù hợp với hạt nhân
+                lessons: [
+                    {
+                        id: "lesson4-1",
+                        title: "Bài 1: Cấu tạo hạt nhân nguyên tử",
+                        icon: "fas fa-microscope",
+                        content: {
+                            theory: [
+                                "Hạt nhân nguyên tử được cấu tạo từ các proton và neutron, gọi chung là nucleon.",
+                                "Proton mang điện tích dương (+e), neutron không mang điện.",
+                                "Số proton Z gọi là nguyên tử số, tổng số nucleon A = Z + N gọi là số khối."
+                            ],
+                            formulas: [
+                                "Số khối: A = Z + N",
+                                "Ký hiệu hạt nhân: ẠX (X là ký hiệu nguyên tố)",
+                                "Bán kính hạt nhân: R = R₀.A^(1/3) với R₀ ≈ 1,2.10^(-15) m"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Hạt nhân Uranium có 92 proton và 143 neutron. Tính số khối và viết ký hiệu hạt nhân.",
+                                "Ví dụ 2: Tính bán kính hạt nhân Carbon-12 (A=12)."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Hạt nhân Helium có 2 proton và 2 neutron. Viết ký hiệu hạt nhân và tính số khối.",
+                                    answer: "Đáp án: ⁴₂He, A = 2 + 2 = 4"
+                                },
+                                {
+                                    question: "Bài 2: Tính bán kính hạt nhân Oxygen-16 (A=16).",
+                                    answer: "Đáp án: R = 1,2.10^(-15) × 16^(1/3) = 1,2.10^(-15) × 2,52 ≈ 3,02.10^(-15) m"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Cấu tạo hạt nhân nguyên tử",
+                                    url: "https://www.youtube.com/embed/example29"
+                                },
+                                {
+                                    title: "Video 2: Mô hình hạt nhân",
+                                    url: "https://www.youtube.com/embed/example30"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Cấu tạo hạt nhân",
+                                    content: "CẤU TẠO HẠT NHÂN NGUYÊN TỬ\\n\\n1. Thành phần:\\n   - Proton: mang điện +e, khối lượng 1,6726.10^(-27) kg\\n   - Neutron: không mang điện, khối lượng 1,6749.10^(-27) kg\\n\\n2. Ký hiệu: ẠX\\n   - Z: số proton (nguyên tử số)\\n   - A: số khối = Z + N\\n   - N: số neutron\\n\\n3. Kích thước hạt nhân:\\n   - Rất nhỏ (~10^(-14) - 10^(-15) m)\\n   - R = R₀.A^(1/3)"
+                                },
+                                {
+                                    title: "Bài tập cấu tạo hạt nhân",
+                                    content: "BÀI TẬP CẤU TẠO HẠT NHÂN\\n\\nBài 1: Xác định số proton, neutron trong các hạt nhân.\\nBài 2: Tính bán kính hạt nhân các nguyên tố."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson4-2",
+                        title: "Bài 2: Phóng xạ",
+                        icon: "fas fa-radiation",
+                        content: {
+                            theory: [
+                                "Phóng xạ là hiện tượng hạt nhân nguyên tử tự động phát ra các tia phóng xạ và biến đổi thành hạt nhân khác.",
+                                "Có 3 loại tia phóng xạ chính: tia alpha (α), tia beta (β), tia gamma (γ).",
+                                "Định luật phóng xạ: Số hạt nhân phóng xạ giảm theo hàm số mũ theo thời gian."
+                            ],
+                            formulas: [
+                                "Định luật phóng xạ: N = N₀.e^(-λt)",
+                                "Hằng số phóng xạ: λ = ln2/T",
+                                "Độ phóng xạ: H = λN = H₀.e^(-λt)"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Chất phóng xạ có chu kỳ bán rã 5 ngày. Tính số hạt nhân còn lại sau 15 ngày so với ban đầu.",
+                                "Ví dụ 2: Mẫu phóng xạ ban đầu có độ phóng xạ 1000 Bq. Tính độ phóng xạ sau 3 chu kỳ bán rã."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Chất phóng xạ có T = 8 ngày. Tính thời gian để số hạt nhân giảm còn 1/4 so với ban đầu.",
+                                    answer: "Đáp án: N/N₀ = 1/4 = (1/2)^(t/T) => t/T = 2 => t = 2×8 = 16 ngày"
+                                },
+                                {
+                                    question: "Bài 2: Độ phóng xạ ban đầu 2000 Bq, T = 10 năm. Tính độ phóng xạ sau 30 năm.",
+                                    answer: "Đáp án: t/T = 30/10 = 3 => H = H₀/2³ = 2000/8 = 250 Bq"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Hiện tượng phóng xạ",
+                                    url: "https://www.youtube.com/embed/example31"
+                                },
+                                {
+                                    title: "Video 2: Các loại tia phóng xạ",
+                                    url: "https://www.youtube.com/embed/example32"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Phóng xạ",
+                                    content: "HIỆN TƯỢNG PHÓNG XẠ\\n\\n1. Các loại tia phóng xạ:\\n   - Tia α: hạt nhân Helium (⁴₂He)\\n   - Tia β⁻: electron (⁰₋₁e)\\n   - Tia β⁺: positron (⁰₁e)\\n   - Tia γ: sóng điện từ năng lượng cao\\n\\n2. Định luật phóng xạ:\\n   - N = N₀.e^(-λt)\\n   - λ = ln2/T\\n   - H = λN\\n\\n3. Chu kỳ bán rã T: thời gian để số hạt nhân giảm còn một nửa"
+                                },
+                                {
+                                    title: "Bài tập phóng xạ",
+                                    content: "BÀI TẬP PHÓNG XẠ\\n\\nBài 1: Tính số hạt nhân còn lại sau thời gian t.\\nBài 2: Tính chu kỳ bán rã từ độ phóng xạ."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: "lesson4-3",
+                        title: "Bài 3: Phản ứng hạt nhân",
+                        icon: "fas fa-bolt",
+                        content: {
+                            theory: [
+                                "Phản ứng hạt nhân là quá trình tương tác giữa các hạt nhân dẫn đến sự biến đổi chúng thành các hạt nhân khác.",
+                                "Có 2 loại phản ứng hạt nhân: phản ứng phân hạch và phản ứng nhiệt hạch.",
+                                "Định luật bảo toàn số khối và điện tích trong phản ứng hạt nhân."
+                            ],
+                            formulas: [
+                                "Năng lượng phản ứng: ΔE = Δm.c²",
+                                "Định luật bảo toàn số khối: A₁ + A₂ = A₃ + A₄",
+                                "Định luật bảo toàn điện tích: Z₁ + Z₂ = Z₃ + Z₄"
+                            ],
+                            examples: [
+                                "Ví dụ 1: Viết phương trình phản ứng khi hạt nhân Nitrogen bắn phá bởi hạt alpha tạo thành Oxygen và proton.",
+                                "Ví dụ 2: Tính năng lượng tỏa ra trong phản ứng phân hạch Uranium-235."
+                            ],
+                            exercises: [
+                                {
+                                    question: "Bài 1: Hoàn thành phương trình: ¹⁴₇N + ⁴₂He → ? + ¹₁H",
+                                    answer: "Đáp án: ¹⁴₇N + ⁴₂He → ¹⁷₈O + ¹₁H (bảo toàn: A=18, Z=9)"
+                                },
+                                {
+                                    question: "Bài 2: Tính năng lượng tỏa ra khi 1g U-235 phân hạch hoàn toàn, biết mỗi phản ứng tỏa 200 MeV.",
+                                    answer: "Đáp án: Số hạt nhân = 1/235 × 6,02.10²³ = 2,56.10²¹; E = 2,56.10²¹ × 200 = 5,12.10²³ MeV = 8,2.10¹⁰ J"
+                                }
+                            ],
+                            videos: [
+                                {
+                                    title: "Video 1: Phản ứng hạt nhân",
+                                    url: "https://www.youtube.com/embed/example33"
+                                },
+                                {
+                                    title: "Video 2: Phân hạch và nhiệt hạch",
+                                    url: "https://www.youtube.com/embed/example34"
+                                }
+                            ],
+                            documents: [
+                                {
+                                    title: "Tài liệu Word: Phản ứng hạt nhân",
+                                    content: "PHẢN ỨNG HẠT NHÂN\\n\\n1. Định luật bảo toàn:\\n   - Tổng số khối: A₁ + A₂ = A₃ + A₄\\n   - Tổng điện tích: Z₁ + Z₂ = Z₃ + Z₄\\n   - Năng lượng toàn phần\\n\\n2. Phân hạch:\\n   - Hạt nhân nặng vỡ thành 2 hạt nhân trung bình\\n   - Tỏa năng lượng lớn\\n   - Ứng dụng: nhà máy điện hạt nhân\\n\\n3. Nhiệt hạch:\\n   - Các hạt nhân nhẹ kết hợp thành hạt nhân nặng hơn\\n   - Năng lượng Mặt Trời"
+                                },
+                                {
+                                    title: "Bài tập phản ứng hạt nhân",
+                                    content: "BÀI TẬP PHẢN ỨNG HẠT NHÂN\\n\\nBài 1: Viết phương trình phản ứng hạt nhân.\\nBài 2: Tính năng lượng phản ứng hạt nhân."
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ];
+
+        // Biến toàn cục
+        let currentLessonId = null;
+
+        // Khởi tạo ứng dụng
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            renderSidebar();
+            renderLessonContent();
+            setupEventListeners();
+            updateProgress();
+            
+            // Khôi phục trạng thái từ localStorage
+            const savedLesson = localStorage.getItem('currentLesson');
+            if (savedLesson && document.getElementById(savedLesson)) {
+                showLessonContent(savedLesson);
+                const lessonElement = document.querySelector(`.lesson[data-lesson-id="${savedLesson}"]`);
+                if (lessonElement) {
+                    lessonElement.classList.add('active');
+                }
+            }
+        }
+
+        // Render sidebar
+        function renderSidebar() {
+            const chaptersContainer = document.getElementById('chapters-list');
+            if (!chaptersContainer) return;
+            
+            chaptersContainer.innerHTML = '';
+            
+            curriculum.forEach(topic => {
+                const chapterElement = document.createElement('li');
+                chapterElement.className = 'chapter';
+                
+                chapterElement.innerHTML = `
+                    <div class="chapter-title">
+                        <div>
+                            <i class="${topic.icon}"></i> ${topic.title}
+                        </div>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <ul class="lessons">
+                        ${topic.lessons.map(lesson => `
+                            <li class="lesson" data-lesson-id="${lesson.id}">
+                                <i class="${lesson.icon} lesson-icon"></i> ${lesson.title}
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                
+                chaptersContainer.appendChild(chapterElement);
+            });
+        }
+
+        // Render nội dung bài học
+        function renderLessonContent() {
+            const mainContent = document.querySelector('.main-content');
+            if (!mainContent) return;
+            
+            // Xóa tất cả các bài học cũ trước khi render mới (trừ welcome)
+            const existingLessons = mainContent.querySelectorAll('.content-section:not(#welcome)');
+            existingLessons.forEach(lesson => lesson.remove());
+            
+            curriculum.forEach(topic => {
+                topic.lessons.forEach(lesson => {
+                    const lessonSection = document.createElement('div');
+                    lessonSection.id = lesson.id;
+                    lessonSection.className = 'content-section';
+                    
+                    lessonSection.innerHTML = `
+                        <h2 class="section-title"><i class="${lesson.icon}"></i> ${lesson.title}</h2>
+                        
+                        <div class="subsection">
+                            <h3><i class="fas fa-book"></i> Lý thuyết</h3>
+                            <ul>
+                                ${lesson.content.theory.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="subsection">
+                            <h3><i class="fas fa-calculator"></i> Công thức</h3>
+                            <div class="formula-box">
+                                <ul>
+                                    ${lesson.content.formulas.map(formula => `<li>${formula}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection">
+                            <h3><i class="fas fa-lightbulb"></i> Ví dụ</h3>
+                            <div class="example-box">
+                                <ul>
+                                    ${lesson.content.examples.map(example => `<li>${example}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection">
+                            <h3><i class="fas fa-tasks"></i> Bài tập</h3>
+                            <div class="exercise-box">
+                                ${lesson.content.exercises.map((exercise, index) => `
+                                    <div>
+                                        <p><strong>${exercise.question}</strong></p>
+                                        <button class="show-answer" data-index="${index}">Xem đáp án</button>
+                                        <div class="answer-box" id="answer-${lesson.id}-${index}">
+                                            ${exercise.answer}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="subsection">
+                            <h3><i class="fas fa-video"></i> Video học tập</h3>
+                            <div class="media-container">
+                                ${lesson.content.videos.map(video => `
+                                    <div class="video-card" onclick="playVideo('${video.url}', '${video.title}')">
+                                        <div class="video-icon">🎬</div>
+                                        <div>${video.title}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div id="video-player-container" style="display: none;">
+                                <div class="video-player" id="video-player">
+                                    <iframe width="100%" height="100%" src="" frameborder="0" allowfullscreen id="video-iframe"></iframe>
+                                </div>
+                                <button onclick="closeVideo()" style="margin-top: 10px; padding: 5px 10px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer;">Đóng video</button>
+                            </div>
+                        </div>
+                        
+                        <div class="subsection">
+                            <h3><i class="fas fa-file-word"></i> Tài liệu Word</h3>
+                            <div class="media-container">
+                                ${lesson.content.documents.map((doc, index) => `
+                                    <div class="doc-card" onclick="showDocument('${lesson.id}-doc-${index}', '${doc.title}', \`${doc.content}\`)">
+                                        <div class="doc-icon">📄</div>
+                                        <div>${doc.title}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div id="doc-viewer-container" style="display: none;">
+                                <div class="doc-content" id="doc-content">
+                                    <!-- Nội dung tài liệu sẽ được hiển thị here -->
+                                </div>
+                                <button class="copy-btn" onclick="copyDocumentContent()">Sao chép</button>
+                                <button onclick="closeDocument()" style="margin-left: 10px; padding: 5px 10px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer;">Đóng tài liệu</button>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-buttons">
+                            <button class="nav-button" id="prev-lesson"><i class="fas fa-arrow-left"></i> Bài trước</button>
+                            <button class="nav-button" id="next-lesson">Bài tiếp theo <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    `;
+                    
+                    mainContent.appendChild(lessonSection);
+                });
+            });
+        }
+
+        // Thiết lập các sự kiện
+        function setupEventListeners() {
+            // Xử lý sự kiện click vào chương
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('chapter-title') || e.target.closest('.chapter-title')) {
+                    const chapterTitle = e.target.classList.contains('chapter-title') ? e.target : e.target.closest('.chapter-title');
+                    const lessons = chapterTitle.nextElementSibling;
+                    const isOpen = lessons.style.maxHeight && lessons.style.maxHeight !== '0px';
+                    
+                    // Đóng tất cả các chương khác
+                    document.querySelectorAll('.lessons').forEach(lesson => {
+                        if (lesson !== lessons) {
+                            lesson.style.maxHeight = '0';
+                            const prevToggle = lesson.previousElementSibling.querySelector('.toggle-icon');
+                            if (prevToggle) prevToggle.textContent = '▶';
+                        }
+                    });
+                    
+                    // Mở/chương hiện tại
+                    const toggleIcon = chapterTitle.querySelector('.toggle-icon');
+                    if (!isOpen) {
+                        lessons.style.maxHeight = lessons.scrollHeight + 'px';
+                        if (toggleIcon) toggleIcon.textContent = '▼';
+                    } else {
+                        lessons.style.maxHeight = '0';
+                        if (toggleIcon) toggleIcon.textContent = '▶';
+                    }
+                }
+            });
+            
+            // Xử lý sự kiện click vào bài học
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('lesson') || e.target.closest('.lesson')) {
+                    const lessonElement = e.target.classList.contains('lesson') ? e.target : e.target.closest('.lesson');
+                    const lessonId = lessonElement.getAttribute('data-lesson-id');
+                    
+                    // Xóa lớp active từ tất cả các bài học
+                    document.querySelectorAll('.lesson').forEach(l => {
+                        l.classList.remove('active');
+                    });
+                    
+                    // Thêm lớp active cho bài học được chọn
+                    lessonElement.classList.add('active');
+                    
+                    // Hiển thị nội dung bài học
+                    showLessonContent(lessonId);
+                    
+                    // Lưu bài học đang xem
+                    localStorage.setItem('currentLesson', lessonId);
+                    currentLessonId = lessonId;
+                    
+                    // Cập nhật tiến độ
+                    updateProgress();
+                }
+            });
+            
+            // Xử lý tìm kiếm
+            const searchBox = document.querySelector('.search-box');
+            if (searchBox) {
+                searchBox.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    
+                    document.querySelectorAll('.lesson').forEach(lesson => {
+                        const lessonText = lesson.textContent.toLowerCase();
+                        if (searchTerm === '' || lessonText.includes(searchTerm)) {
+                            lesson.style.display = 'flex';
+                        } else {
+                            lesson.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // Xử lý nút điều hướng
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'prev-lesson' || e.target.closest('#prev-lesson')) {
+                    navigateLesson(-1);
+                }
+                if (e.target.id === 'next-lesson' || e.target.closest('#next-lesson')) {
+                    navigateLesson(1);
+                }
+            });
+            
+            // Xử lý nút hiển thị đáp án
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('show-answer')) {
+                    const index = e.target.getAttribute('data-index');
+                    const answerBox = document.getElementById(`answer-${currentLessonId}-${index}`);
+                    if (answerBox) {
+                        answerBox.style.display = answerBox.style.display === 'block' ? 'none' : 'block';
+                        e.target.textContent = answerBox.style.display === 'block' ? 'Ẩn đáp án' : 'Xem đáp án';
+                    }
+                }
+            });
+            
+            // Xử lý nút cuộn lên đầu trang
+            const scrollTopBtn = document.getElementById('scroll-top');
+            if (scrollTopBtn) {
+                scrollTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            
+            // Xử lý nút chuyển đổi chủ đề
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-theme');
+                    const icon = this.querySelector('i');
+                    if (document.body.classList.contains('dark-theme')) {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                        // Thêm CSS cho dark theme
+                        addDarkTheme();
+                    } else {
+                        icon.classList.remove('fa-sun');
+                        icon.classList.add('fa-moon');
+                        // Xóa CSS dark theme
+                        removeDarkTheme();
+                    }
+                });
+            }
+        }
+
+        // Hiển thị nội dung bài học được chọn
+        function showLessonContent(lessonId) {
+            // Ẩn tất cả các phần nội dung
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Hiển thị phần nội dung được chọn
+            const targetSection = document.getElementById(lessonId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                currentLessonId = lessonId;
+                
+                // Ẩn video player và doc viewer khi chuyển bài
+                document.getElementById('video-player-container').style.display = 'none';
+                document.getElementById('doc-viewer-container').style.display = 'none';
+            } else {
+                // Nếu không tìm thấy bài học, hiển thị trang chào mừng
+                document.getElementById('welcome').classList.add('active');
+            }
+        }
+
+        // Điều hướng bài học
+        function navigateLesson(direction) {
+            const lessons = Array.from(document.querySelectorAll('.lesson'));
+            const currentIndex = lessons.findIndex(lesson => lesson.classList.contains('active'));
+            
+            if (currentIndex === -1) return;
+            
+            const newIndex = currentIndex + direction;
+            
+            if (newIndex >= 0 && newIndex < lessons.length) {
+                lessons[newIndex].click();
+            }
+        }
+
+        // Cập nhật tiến độ học tập
+        function updateProgress() {
+            const totalLessons = document.querySelectorAll('.lesson').length;
+            const completedLessons = document.querySelectorAll('.lesson.active').length;
+            const progressPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+            
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            if (progressBar && progressText) {
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${progressPercentage}%`;
+            }
+        }
+
+        // Chức năng phát video
+        function playVideo(url, title) {
+            const videoContainer = document.getElementById('video-player-container');
+            const videoIframe = document.getElementById('video-iframe');
+            
+            videoIframe.src = url;
+            videoContainer.style.display = 'block';
+            
+            // Cuộn đến video player
+            videoContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeVideo() {
+            const videoContainer = document.getElementById('video-player-container');
+            const videoIframe = document.getElementById('video-iframe');
+            
+            videoIframe.src = '';
+            videoContainer.style.display = 'none';
+        }
+
+        // Chức năng hiển thị tài liệu
+        function showDocument(docId, title, content) {
+            const docContainer = document.getElementById('doc-viewer-container');
+            const docContent = document.getElementById('doc-content');
+            
+            // Format content với các ký tự đặc biệt
+            const formattedContent = content.replace(/\\n/g, '<br>');
+            
+            docContent.innerHTML = `<h3>${title}</h3><div>${formattedContent}</div>`;
+            docContainer.style.display = 'block';
+            
+            // Cuộn đến doc viewer
+            docContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDocument() {
+            const docContainer = document.getElementById('doc-viewer-container');
+            docContainer.style.display = 'none';
+        }
+
+        // Chức năng sao chép nội dung tài liệu
+        function copyDocumentContent() {
+            const docContent = document.getElementById('doc-content');
+            const textToCopy = docContent.innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                alert('Đã sao chép nội dung vào clipboard!');
+            }, function(err) {
+                console.error('Lỗi khi sao chép: ', err);
+            });
+        }
+
+        // Thêm CSS cho dark theme
+        function addDarkTheme() {
+            const style = document.createElement('style');
+            style.id = 'dark-theme';
+            style.textContent = `
+                body {
+                    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+                    color: #ecf0f1;
+                }
+                .sidebar, .main-content {
+                    background-color: #34495e;
+                    color: #ecf0f1;
+                }
+                .chapter-title {
+                    background-color: #2c3e50;
+                    color: #ecf0f1;
+                }
+                .subsection {
+                    background-color: #2c3e50;
+                }
+                .formula-box, .example-box, .exercise-box {
+                    background-color: #2c3e50;
+                }
+                .video-card, .doc-card {
+                    background-color: #2c3e50;
+                    color: #ecf0f1;
+                }
+                .doc-content {
+                    background-color: #2c3e50;
+                    color: #ecf0f1;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Xóa CSS dark theme
+        function removeDarkTheme() {
+            const darkTheme = document.getElementById('dark-theme');
+            if (darkTheme) {
+                darkTheme.remove();
+            }
+        }
+    </script>
+</body>
+</html>
